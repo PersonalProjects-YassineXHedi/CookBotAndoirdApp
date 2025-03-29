@@ -9,7 +9,6 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -19,14 +18,7 @@ import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureException;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
-import androidx.camera.video.Recorder;
-import androidx.camera.video.Recording;
-import androidx.camera.video.VideoCapture;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.example.cookbot.databinding.ActivityMainBinding;
 import com.google.common.util.concurrent.ListenableFuture;
@@ -45,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding viewBinding;
 
     private ImageCapture imageCapture = null;
-    private VideoCapture<Recorder> videoCapture = null;
-    private Recording recording = null;
 
     private ExecutorService cameraExecutor;
 
@@ -55,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final List<String> REQUIRED_PERMISSIONS = new ArrayList<String>() {{
         add(Manifest.permission.CAMERA);
-        add(Manifest.permission.RECORD_AUDIO);
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
             add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
