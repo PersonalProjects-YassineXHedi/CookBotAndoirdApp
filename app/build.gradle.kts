@@ -49,4 +49,7 @@ dependencies {
     implementation(libs.camerax.lifecycle)
     implementation(libs.camerax.view)
     implementation(libs.camerax.extensions)
+
+    implementation(libs.mlkit.objectDetection.custom)
+
 }
