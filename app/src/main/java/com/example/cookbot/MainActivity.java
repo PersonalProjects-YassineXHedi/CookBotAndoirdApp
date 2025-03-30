@@ -1,28 +1,44 @@
 package com.example.cookbot;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.Manifest;
+import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.ViewGroup;
 import android.widget.Toast;
+
+import android.util.Size;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.camera.core.AspectRatio;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureException;
+import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
+import androidx.camera.core.resolutionselector.ResolutionSelector;
+import androidx.camera.core.resolutionselector.ResolutionStrategy;
 import androidx.camera.lifecycle.ProcessCameraProvider;
+import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 
 import com.example.cookbot.databinding.ActivityMainBinding;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.io.File;
+import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
             add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
     }};
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewBinding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -69,25 +86,15 @@ public class MainActivity extends AppCompatActivity {
         // Get a stable reference of the modifiable image capture use case
         if (imageCapture == null) return;
 
-        // Create timestamped name and MediaStore entry
-        String name = new SimpleDateFormat(FILENAME_FORMAT, Locale.US)
-                .format(System.currentTimeMillis());
+        // Generate a temp file in your app's private storage
+        File tempDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        String fileName = new SimpleDateFormat(FILENAME_FORMAT, Locale.US)
+                .format(System.currentTimeMillis()) + ".jpg";
+        File tempFile = new File(tempDir, fileName);
 
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(MediaStore.MediaColumns.DISPLAY_NAME, name);
-        contentValues.put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg");
-
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-            contentValues.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/CameraX-Image");
-        }
-
-        // Create output options object which contains file + metadata
+        // Create OutputFileOptions with the file
         ImageCapture.OutputFileOptions outputOptions =
-                new ImageCapture.OutputFileOptions.Builder(
-                        getContentResolver(),
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        contentValues
-                ).build();
+                new ImageCapture.OutputFileOptions.Builder(tempFile).build();
 
         // Set up image capture listener
         imageCapture.takePicture(
@@ -95,15 +102,17 @@ public class MainActivity extends AppCompatActivity {
                 ContextCompat.getMainExecutor(this),
                 new ImageCapture.OnImageSavedCallback() {
                     @Override
-                    public void onError(@NonNull ImageCaptureException exc) {
-                        Log.e(TAG, "Photo capture failed: " + exc.getMessage(), exc);
+                    public void onImageSaved(@NonNull ImageCapture.OutputFileResults output) {
+                        Uri imageUri = Uri.fromFile(tempFile);
+
+                        Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
+                        intent.putExtra("image_uri", imageUri.toString());
+                        startActivity(intent);
                     }
 
                     @Override
-                    public void onImageSaved(@NonNull ImageCapture.OutputFileResults output) {
-                        String msg = "Photo capture succeeded: " + output.getSavedUri();
-                        Toast.makeText(getBaseContext(), msg, Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, msg);
+                    public void onError(@NonNull ImageCaptureException exc) {
+                        Log.e(TAG, "Photo capture failed: " + exc.getMessage(), exc);
                     }
                 }
         );
@@ -119,12 +128,11 @@ public class MainActivity extends AppCompatActivity {
                 // Used to bind the lifecycle of cameras to the lifecycle owner
                 ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
 
-                // Preview
-                Preview preview = new Preview.Builder().build();
-                preview.setSurfaceProvider(viewBinding.viewFinder.getSurfaceProvider());
+                viewBinding.viewFinder.setScaleType(PreviewView.ScaleType.FILL_CENTER);
 
-                // ImageCapture use case
-                imageCapture = new ImageCapture.Builder().build();
+                Preview preview = new Preview.Builder().build();
+                imageCapture =new ImageCapture.Builder().build();
+                preview.setSurfaceProvider(viewBinding.viewFinder.getSurfaceProvider());
 
                 // Select back camera as a default
                 CameraSelector cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
@@ -182,5 +190,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
             );
+
 
 }
