@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.camerax.view)
     implementation(libs.camerax.extensions)
 
-    implementation(libs.mlkit.objectDetection.custom)
+    implementation(libs.tensorflow.lite)
+    implementation(libs.tensorflow.lite.support)
+    implementation(libs.tflite.gpu)
 
 }
