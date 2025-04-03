@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace = "com.example.cookbot"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.cookbot"
-        minSdk = 21
         targetSdk = 34
+        minSdk = 21
         versionCode = 1
         versionName = "1.0"
 
