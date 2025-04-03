@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,11 +33,7 @@ public class DisplayActivity extends AppCompatActivity {
         if (uriString != null) {
             Uri imageUri = Uri.parse(uriString);
             try {
-                //when taking a picture
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-
-                //For debug mode
-                //Bitmap bitmap = BitmapFactory.decodeFile(imageUri.getPath());
 
                 Detector detector = new Detector(
                         this,

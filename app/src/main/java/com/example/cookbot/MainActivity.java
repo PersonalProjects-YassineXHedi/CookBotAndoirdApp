@@ -113,24 +113,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*private void takePhoto() {
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.debug); // From drawable
-
-        File tempFile = new File(getCacheDir(), "debug.jpg");
-        try (FileOutputStream out = new FileOutputStream(tempFile)) {
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            out.flush();
-
-            Uri imageUri = Uri.fromFile(tempFile);
-            Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
-            intent.putExtra("image_uri", imageUri.toString());
-            startActivity(intent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }*/
-
-
     private void startCamera() {
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture =
                 ProcessCameraProvider.getInstance(this);
