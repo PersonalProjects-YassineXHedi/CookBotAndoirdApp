@@ -20,8 +20,10 @@ import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class Detector {
     private final Context context;
@@ -180,6 +182,17 @@ public class Detector {
     public interface DetectorListener {
         void onEmptyDetect();
         void onDetect(List<BoundingBox> boundingBoxes);
+    }
+
+    public static Map<String,Integer>  getDetectedClassesAndCount(List<BoundingBox> boundingBoxes){
+        Map<String, Integer> classesAndCount = new HashMap<>();
+        for (BoundingBox box: boundingBoxes) {
+            if (!classesAndCount.containsKey(box.clsName)) {
+                classesAndCount.put(box.clsName, 1);
+            }
+            classesAndCount.put(box.clsName, classesAndCount.get(box.clsName) + 1);
+        }
+        return classesAndCount;
     }
 
 

@@ -33,10 +33,10 @@ public class DisplayActivity extends AppCompatActivity {
             Uri imageUri = Uri.parse(uriString);
             try {
                 //when taking a picture
-                //Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
 
                 //For debug mode
-                Bitmap bitmap = BitmapFactory.decodeFile(imageUri.getPath());
+                //Bitmap bitmap = BitmapFactory.decodeFile(imageUri.getPath());
 
                 Detector detector = new Detector(
                         this,
@@ -98,13 +98,9 @@ public class DisplayActivity extends AppCompatActivity {
     }
 
     private void displayDetectedClasses(List<BoundingBox> boundingBoxes){
-        Map<String, Integer> classesAndCount = new HashMap<>();
-        for (BoundingBox box: boundingBoxes) {
-            if(!classesAndCount.containsKey(box.clsName)){
-                classesAndCount.put(box.clsName, 1);
-            }
-            classesAndCount.put(box.clsName, classesAndCount.get(box.clsName) + 1);
-        }
+        Map<String, Integer> classesAndCount = Detector.getDetectedClassesAndCount(boundingBoxes);
+
     }
+
 
 }
