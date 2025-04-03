@@ -1,10 +1,12 @@
 package com.example.cookbot;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -38,6 +40,8 @@ import com.example.cookbot.databinding.ActivityMainBinding;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.net.URI;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -86,24 +90,14 @@ public class MainActivity extends AppCompatActivity {
         // Get a stable reference of the modifiable image capture use case
         if (imageCapture == null) return;
 
-        // Generate a temp file in your app's private storage
-        File tempDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        String fileName = new SimpleDateFormat(FILENAME_FORMAT, Locale.US)
-                .format(System.currentTimeMillis()) + ".jpg";
-        File tempFile = new File(tempDir, fileName);
-
-        // Create OutputFileOptions with the file
-        ImageCapture.OutputFileOptions outputOptions =
-                new ImageCapture.OutputFileOptions.Builder(tempFile).build();
-
-        // Set up image capture listener
         imageCapture.takePicture(
-                outputOptions,
                 ContextCompat.getMainExecutor(this),
-                new ImageCapture.OnImageSavedCallback() {
+                new ImageCapture.OnImageCapturedCallback() {
                     @Override
-                    public void onImageSaved(@NonNull ImageCapture.OutputFileResults output) {
-                        Uri imageUri = Uri.fromFile(tempFile);
+                    public void onCaptureSuccess(@NonNull ImageProxy imageProxy) {
+                        File tempDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+
+                        Uri imageUri = InputImageHelper.getImageUri(imageProxy, tempDir);
 
                         Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
                         intent.putExtra("image_uri", imageUri.toString());
@@ -111,13 +105,13 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onError(@NonNull ImageCaptureException exc) {
-                        Log.e(TAG, "Photo capture failed: " + exc.getMessage(), exc);
+                    public void onError(@NonNull ImageCaptureException exception) {
+                        exception.printStackTrace();
                     }
                 }
         );
-    }
 
+    }
 
     private void startCamera() {
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture =

@@ -1,0 +1,26 @@
+apple
+avocado
+banana
+beef
+bread
+broccoli
+cabbage
+carrot
+cheese
+chicken
+corn
+cucumber
+egg
+eggplant
+garlic
+ground beef
+lemon
+lettuce
+mushrooms
+onion
+pepper
+pork
+potato
+shrimp
+strawberry
+tomato
