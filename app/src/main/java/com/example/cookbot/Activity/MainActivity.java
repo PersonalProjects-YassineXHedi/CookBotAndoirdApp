@@ -1,37 +1,22 @@
-package com.example.cookbot;
+package com.example.cookbot.Activity;
 
-import android.annotation.SuppressLint;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.Manifest;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.ViewGroup;
 import android.widget.Toast;
-
-import android.util.Size;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.core.AspectRatio;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureException;
 import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
-import androidx.camera.core.resolutionselector.ResolutionSelector;
-import androidx.camera.core.resolutionselector.ResolutionStrategy;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
@@ -39,15 +24,9 @@ import androidx.core.content.ContextCompat;
 import com.example.cookbot.databinding.ActivityMainBinding;
 import com.google.common.util.concurrent.ListenableFuture;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.net.URI;
-import java.nio.ByteBuffer;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -95,12 +74,14 @@ public class MainActivity extends AppCompatActivity {
                 new ImageCapture.OnImageCapturedCallback() {
                     @Override
                     public void onCaptureSuccess(@NonNull ImageProxy imageProxy) {
-                        File tempDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                        /*File tempDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
 
                         Uri imageUri = InputImageHelper.getImageUri(imageProxy, tempDir);
 
                         Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
                         intent.putExtra("image_uri", imageUri.toString());
+                        startActivity(intent);*/
+                        Intent intent = new Intent(MainActivity.this, DetectedClassesActivity.class);
                         startActivity(intent);
                     }
 

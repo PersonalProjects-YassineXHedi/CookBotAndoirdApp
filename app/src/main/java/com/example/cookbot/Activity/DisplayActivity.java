@@ -1,7 +1,6 @@
-package com.example.cookbot;
+package com.example.cookbot.Activity;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,18 +9,22 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.HashMap;
+import com.example.cookbot.BoundingBox;
+import com.example.cookbot.Detector;
+import com.example.cookbot.Ingredient;
+import com.example.cookbot.R;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class DisplayActivity extends AppCompatActivity {
 
+    private ArrayList<Ingredient> detectedIngredients = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +50,7 @@ public class DisplayActivity extends AppCompatActivity {
 
                             @Override
                             public void onDetect(List<BoundingBox> boundingBoxes) {
-                                displayDetectedClasses(boundingBoxes);
+                                detectedIngredients = Detector.getDetectedClasses(boundingBoxes);
                                 runOnUiThread(() -> {
                                     Bitmap updatedBitmap = drawBoundingBoxes(bitmap, boundingBoxes);
                                     imageView.setImageBitmap(updatedBitmap);
