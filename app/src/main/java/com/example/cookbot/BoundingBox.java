@@ -1,6 +1,8 @@
 package com.example.cookbot;
 
-public class BoundingBox {
+import java.io.Serializable;
+
+public class BoundingBox implements Serializable {
     public float x1, y1, x2, y2, cx, cy, w, h, cnf;
     public int cls;
     public String clsName;

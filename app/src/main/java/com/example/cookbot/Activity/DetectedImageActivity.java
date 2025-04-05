@@ -9,62 +9,59 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cookbot.BoundingBox;
 import com.example.cookbot.Detector;
-import com.example.cookbot.Ingredient;
 import com.example.cookbot.R;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class DisplayActivity extends AppCompatActivity {
+public class DetectedImageActivity extends AppCompatActivity {
+    Bitmap imageBitmap;
+    ImageView imageView;
+    Button viewIngredientsButton;
 
-    private ArrayList<Ingredient> detectedIngredients = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_display);
+        setContentView(R.layout.activity_detected_image);
+
+        imageView = findViewById(R.id.imageView);
+        viewIngredientsButton = findViewById(R.id.viewIngredientButton);
+
+        displayDetectedBoxesOnImage();
+
+        viewIngredientsButton.setOnClickListener(v -> viewIngredientTable());
+    }
+
+    private void viewIngredientTable(){
+
+    }
+
+    private void displayDetectedBoxesOnImage(){
+        @SuppressWarnings("unchecked")
+        ArrayList<BoundingBox> boxes = (ArrayList<BoundingBox>) getIntent().getSerializableExtra("boxes");
 
         String uriString = getIntent().getStringExtra("image_uri");
-        ImageView imageView = findViewById(R.id.fullscreenImageView);
-
-        if (uriString != null) {
-            Uri imageUri = Uri.parse(uriString);
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-
-                Detector detector = new Detector(
-                        this,
-                        "best_float32.tflite",
-                        "labels.txt",
-                        new Detector.DetectorListener() {
-                            @Override
-                            public void onEmptyDetect() {
-                                imageView.setImageBitmap(bitmap);
-                            }
-
-                            @Override
-                            public void onDetect(List<BoundingBox> boundingBoxes) {
-                                detectedIngredients = Detector.getDetectedClasses(boundingBoxes);
-                                runOnUiThread(() -> {
-                                    Bitmap updatedBitmap = drawBoundingBoxes(bitmap, boundingBoxes);
-                                    imageView.setImageBitmap(updatedBitmap);
-                                });
-                            }
-
-                        }
-                );
-                detector.setup();
-                detector.detect(bitmap);
-
-            } catch (Exception e) {
-                e.printStackTrace();
+        try{
+            if(uriString != null){
+                Uri imageUri = Uri.parse(uriString);
+                imageBitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
             }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        if(imageBitmap != null && boxes != null){
+            runOnUiThread(() -> {
+                Bitmap updatedBitmap = drawBoundingBoxes(imageBitmap, boxes);
+                imageView.setImageBitmap(updatedBitmap);
+            });
         }
     }
 
@@ -95,11 +92,6 @@ public class DisplayActivity extends AppCompatActivity {
         }
 
         return mutableBitmap;
-    }
-
-    private void displayDetectedClasses(List<BoundingBox> boundingBoxes){
-        Map<String, Integer> classesAndCount = Detector.getDetectedClassesAndCount(boundingBoxes);
-
     }
 
 

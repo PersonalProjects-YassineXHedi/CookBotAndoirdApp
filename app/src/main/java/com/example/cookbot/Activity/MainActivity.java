@@ -2,9 +2,11 @@ package com.example.cookbot.Activity;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.Manifest;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,9 +23,11 @@ import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 
+import com.example.cookbot.InputImageHelper;
 import com.example.cookbot.databinding.ActivityMainBinding;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -78,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
                         Uri imageUri = InputImageHelper.getImageUri(imageProxy, tempDir);
 
-                        Intent intent = new Intent(MainActivity.this, DisplayActivity.class);
+                        Intent intent = new Intent(MainActivity.this, DisplayImageActivity.class);
                         intent.putExtra("image_uri", imageUri.toString());
                         startActivity(intent);*/
                         Intent intent = new Intent(MainActivity.this, DetectedClassesActivity.class);

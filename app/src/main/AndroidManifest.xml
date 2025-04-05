@@ -26,8 +26,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.DisplayActivity" />
-        <activity android:name=".Activity.DetectedClassesActivity" />
+        <activity android:name=".Activity.DisplayImageActivity" />
+        <activity android:name=".Activity.DetectedImageActivity" />
     </application>
 
 </manifest>
