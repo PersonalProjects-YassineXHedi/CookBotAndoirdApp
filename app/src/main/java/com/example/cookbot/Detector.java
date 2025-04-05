@@ -4,8 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
 
-import androidx.camera.core.processing.SurfaceProcessorNode;
-
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.Interpreter;
 import org.tensorflow.lite.support.common.FileUtil;
@@ -22,10 +20,8 @@ import java.io.InputStreamReader;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 public class Detector {
     private final Context context;
@@ -186,7 +182,7 @@ public class Detector {
         void onDetect(List<BoundingBox> boundingBoxes);
     }
 
-    public static ArrayList<Ingredient>  getDetectedClasses(List<BoundingBox> boundingBoxes){
+    public static ArrayList<Ingredient> getDetectedIngredients(List<BoundingBox> boundingBoxes){
         ArrayList<Ingredient> ingredients = new ArrayList<>();
         for (BoundingBox box: boundingBoxes) {
             Ingredient detectedIngredient = new Ingredient(box.clsName);

@@ -1,5 +1,6 @@
 package com.example.cookbot.Activity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,17 +16,20 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cookbot.BoundingBox;
+import com.example.cookbot.Cart;
 import com.example.cookbot.Detector;
+import com.example.cookbot.Ingredient;
 import com.example.cookbot.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class DetectedImageActivity extends AppCompatActivity {
     Bitmap imageBitmap;
     ImageView imageView;
     Button viewIngredientsButton;
+    ArrayList<BoundingBox> detectedBoxes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +39,24 @@ public class DetectedImageActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         viewIngredientsButton = findViewById(R.id.viewIngredientButton);
 
+        detectedBoxes = (ArrayList<BoundingBox>) getIntent().getSerializableExtra("boxes");
         displayDetectedBoxesOnImage();
 
-        viewIngredientsButton.setOnClickListener(v -> viewIngredientTable());
+        viewIngredientsButton.setOnClickListener(v -> viewCart());
     }
 
-    private void viewIngredientTable(){
-
+    private Cart getInitialCart(){
+        ArrayList<Ingredient> ingredients = Detector.getDetectedIngredients(detectedBoxes);
+        return new Cart(ingredients);
+    }
+    private void viewCart(){
+        Cart initialCart = getInitialCart();
+        Intent intent = new Intent(DetectedImageActivity.this, CartActivity.class);
+        intent.putExtra("cart", initialCart);
+        startActivity(intent);
     }
 
     private void displayDetectedBoxesOnImage(){
-        @SuppressWarnings("unchecked")
-        ArrayList<BoundingBox> boxes = (ArrayList<BoundingBox>) getIntent().getSerializableExtra("boxes");
-
         String uriString = getIntent().getStringExtra("image_uri");
         try{
             if(uriString != null){
@@ -57,9 +66,9 @@ public class DetectedImageActivity extends AppCompatActivity {
         }catch(Exception e){
             e.printStackTrace();
         }
-        if(imageBitmap != null && boxes != null){
+        if(imageBitmap != null && detectedBoxes != null){
             runOnUiThread(() -> {
-                Bitmap updatedBitmap = drawBoundingBoxes(imageBitmap, boxes);
+                Bitmap updatedBitmap = drawBoundingBoxes(imageBitmap, detectedBoxes);
                 imageView.setImageBitmap(updatedBitmap);
             });
         }
