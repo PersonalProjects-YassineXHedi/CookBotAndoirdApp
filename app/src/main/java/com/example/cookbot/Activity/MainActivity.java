@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
     private ExecutorService cameraExecutor;
 
     private static final String TAG = "CameraXApp";
-    private static final String FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS";
 
     private static final List<String> REQUIRED_PERMISSIONS = new ArrayList<String>() {{
         add(Manifest.permission.CAMERA);
@@ -70,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void takePhoto() {
-        // Get a stable reference of the modifiable image capture use case
         if (imageCapture == null) return;
 
         imageCapture.takePicture(
