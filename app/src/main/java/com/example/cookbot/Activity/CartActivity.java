@@ -1,5 +1,6 @@
 package com.example.cookbot.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TableLayout;
@@ -37,7 +38,8 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void searchRecipes(){
-        throw new NotImplementedError();
+        Intent intent = new Intent(CartActivity.this, RecipesProposalsActivity.class);
+        startActivity(intent);
     }
 
 

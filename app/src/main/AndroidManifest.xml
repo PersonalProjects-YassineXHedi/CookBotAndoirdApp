@@ -29,6 +29,7 @@
         <activity android:name=".Activity.DisplayImageActivity" />
         <activity android:name=".Activity.DetectedImageActivity" />
         <activity android:name=".Activity.CartActivity" />
+        <activity android:name=".Activity.RecipesProposalsActivity" />
     </application>
 
 </manifest>
