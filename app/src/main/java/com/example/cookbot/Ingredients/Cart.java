@@ -1,4 +1,4 @@
-package com.example.cookbot;
+package com.example.cookbot.Ingredients;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;

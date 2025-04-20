@@ -1,8 +1,10 @@
-package com.example.cookbot;
+package com.example.cookbot.Recipes;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.example.cookbot.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -7,11 +7,11 @@ import android.widget.TableLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cookbot.Cart;
-import com.example.cookbot.IngredientTable;
+import com.example.cookbot.Ingredients.Cart;
+import com.example.cookbot.Ingredients.IngredientTable;
 import com.example.cookbot.R;
-
-import kotlin.NotImplementedError;
+import com.example.cookbot.Recipes.Recipe;
+import com.example.cookbot.Recipes.RecipesSearch;
 
 
 public class CartActivity extends AppCompatActivity {
@@ -38,6 +38,8 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void searchRecipes(){
+        RecipesSearch mySuggestedRecipes = new RecipesSearch(myCart);
+
         Intent intent = new Intent(CartActivity.this, RecipesProposalsActivity.class);
         startActivity(intent);
     }

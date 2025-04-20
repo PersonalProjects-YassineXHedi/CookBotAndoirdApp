@@ -1,4 +1,4 @@
-package com.example.cookbot;
+package com.example.cookbot.Recipes;
 
 public class Recipe {
     public final String title;

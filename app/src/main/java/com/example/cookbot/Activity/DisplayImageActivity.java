@@ -3,11 +3,6 @@ package com.example.cookbot.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.RectF;
-import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,8 +12,8 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cookbot.BoundingBox;
-import com.example.cookbot.Detector;
+import com.example.cookbot.Model.BoundingBox;
+import com.example.cookbot.Model.Detector;
 import com.example.cookbot.R;
 
 import java.io.Serializable;

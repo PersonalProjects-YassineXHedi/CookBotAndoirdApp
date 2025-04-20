@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cookbot.R;
-import com.example.cookbot.RecipeAdapter;
-import com.example.cookbot.RecipeViewModel;
+import com.example.cookbot.Recipes.RecipeAdapter;
+import com.example.cookbot.Recipes.RecipeViewModel;
 
 public class RecipesProposalsActivity extends AppCompatActivity {
 
