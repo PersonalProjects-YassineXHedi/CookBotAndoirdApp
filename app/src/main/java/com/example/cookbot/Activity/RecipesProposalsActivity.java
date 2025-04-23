@@ -7,9 +7,14 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.cookbot.Ingredients.Cart;
 import com.example.cookbot.R;
+import com.example.cookbot.Recipes.Recipe;
 import com.example.cookbot.Recipes.RecipeAdapter;
 import com.example.cookbot.Recipes.RecipeViewModel;
+import com.example.cookbot.Recipes.RecipesSearch;
+
+import java.util.List;
 
 public class RecipesProposalsActivity extends AppCompatActivity {
 
@@ -28,6 +33,11 @@ public class RecipesProposalsActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(RecipeViewModel.class);
         viewModel.getRecipes().observe(this, adapter::setRecipes);
-        viewModel.loadRecipes();
+
+        Cart myCart = (Cart) getIntent().getSerializableExtra("cart");
+        RecipesSearch recipesSearch = new RecipesSearch(this, myCart);
+        List<Recipe> myRecipes = recipesSearch.getSuggestRecipes();
+
+        viewModel.loadRecipes(myRecipes);
     }
 }

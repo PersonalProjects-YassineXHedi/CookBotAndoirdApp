@@ -1,6 +1,7 @@
 package com.example.cookbot.Ingredients;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Ingredient implements Serializable {
     private String name;
@@ -12,7 +13,12 @@ public class Ingredient implements Serializable {
     }
     public Ingredient(String name) {
         this.name = name;
-        this.isSelected = true;
+        this.isSelected = false;
+    }
+
+    public boolean Equals(Ingredient other){
+        if(!Objects.equals(name, other.name)){return false;}
+        return true;
     }
 
     public String getName() { return name; }

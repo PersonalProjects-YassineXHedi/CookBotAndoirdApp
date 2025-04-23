@@ -26,25 +26,12 @@ public class RecipeViewModel extends ViewModel {
         recipes.setValue(currentList);
     }
 
-    public void loadRecipes() {
-        recipes.setValue(Arrays.asList(
-                new Recipe("Pasta", "Creamy Alfredo pasta", R.drawable.test_image_recipe),
-                new Recipe("Burger", "Juicy beef burger"),
-                new Recipe("Pasta", "Creamy Alfredo pasta", R.drawable.test_image_recipe),
-                new Recipe("Burger", "Juicy beef burger"),
-                new Recipe("Pasta", "Creamy Alfredo pasta", R.drawable.test_image_recipe),
-                new Recipe("Burger", "Juicy beef burger"),
-                new Recipe("Pasta", "Creamy Alfredo pasta", R.drawable.test_image_recipe),
-                new Recipe("Burger", "Juicy beef burger"),
-                new Recipe("Pasta", "Creamy Alfredo pasta", R.drawable.test_image_recipe),
-                new Recipe("Burger", "Juicy beef burger"),
-                new Recipe("Pasta", "Creamy Alfredo pasta", R.drawable.test_image_recipe),
-                new Recipe("Burger", "Juicy beef burger"),
-                new Recipe("Pasta", "Creamy Alfredo pasta", R.drawable.test_image_recipe),
-                new Recipe("Burger", "Juicy beef burger"),new Recipe("Pasta", "Creamy Alfredo pasta", R.drawable.test_image_recipe),
-                new Recipe("Burger", "Juicy beef burger")
-
-
-        ));
+    public void loadRecipes(List<Recipe> suggestedRecipes) {
+        for (Recipe recipe :
+                suggestedRecipes) {
+            addRecipe(recipe);
+        }
     }
+
+
 }

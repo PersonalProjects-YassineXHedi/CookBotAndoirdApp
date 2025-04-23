@@ -38,9 +38,8 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void searchRecipes(){
-        RecipesSearch mySuggestedRecipes = new RecipesSearch(myCart);
-
         Intent intent = new Intent(CartActivity.this, RecipesProposalsActivity.class);
+        intent.putExtra("cart", myCart);
         startActivity(intent);
     }
 
