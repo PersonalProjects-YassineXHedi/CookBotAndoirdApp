@@ -1,4 +1,4 @@
-package com.example.cookbot;
+package com.example.cookbot.Model;
 
 import java.io.Serializable;
 

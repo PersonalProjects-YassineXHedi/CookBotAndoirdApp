@@ -1,4 +1,4 @@
-package com.example.cookbot;
+package com.example.cookbot.Ingredients;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -28,5 +28,19 @@ public class Cart implements Serializable {
 
     public ArrayList<Ingredient> getIngredients(){
         return ingredients;
+    }
+    
+    public boolean containsIngredient(Ingredient ingredient){
+        for (Ingredient ing :
+                ingredients) {
+            if(ing.Equals(ingredient)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int getTotalIngredientsCount(){
+        return ingredients.size();
     }
 }

@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId = "com.example.cookbot"
         targetSdk = 34
-        minSdk = 21
+        minSdk = 24
         versionCode = 1
         versionName = "1.0"
 

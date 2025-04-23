@@ -1,13 +1,11 @@
-package com.example.cookbot;
+package com.example.cookbot.Model;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.Image;
 import android.net.Uri;
-import android.os.Environment;
 
 import androidx.camera.core.ImageProxy;
 

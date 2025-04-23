@@ -1,16 +1,17 @@
 package com.example.cookbot.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TableLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cookbot.Cart;
-import com.example.cookbot.IngredientTable;
+import com.example.cookbot.Ingredients.Cart;
+import com.example.cookbot.Ingredients.IngredientTable;
 import com.example.cookbot.R;
-
-import kotlin.NotImplementedError;
+import com.example.cookbot.Recipes.Recipe;
+import com.example.cookbot.Recipes.RecipesSearch;
 
 
 public class CartActivity extends AppCompatActivity {
@@ -37,7 +38,9 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void searchRecipes(){
-        throw new NotImplementedError();
+        Intent intent = new Intent(CartActivity.this, RecipesProposalsActivity.class);
+        intent.putExtra("cart", myCart);
+        startActivity(intent);
     }
 
 

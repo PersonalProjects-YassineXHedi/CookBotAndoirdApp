@@ -1,17 +1,18 @@
-package com.example.cookbot;
+package com.example.cookbot.Ingredients;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Gravity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import com.example.cookbot.R;
 
 import java.util.ArrayList;
 import java.util.List;

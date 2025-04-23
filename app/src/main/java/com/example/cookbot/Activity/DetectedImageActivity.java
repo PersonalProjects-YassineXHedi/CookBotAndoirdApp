@@ -15,13 +15,12 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cookbot.BoundingBox;
-import com.example.cookbot.Cart;
-import com.example.cookbot.Detector;
-import com.example.cookbot.Ingredient;
+import com.example.cookbot.Model.BoundingBox;
+import com.example.cookbot.Ingredients.Cart;
+import com.example.cookbot.Model.Detector;
+import com.example.cookbot.Ingredients.Ingredient;
 import com.example.cookbot.R;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
