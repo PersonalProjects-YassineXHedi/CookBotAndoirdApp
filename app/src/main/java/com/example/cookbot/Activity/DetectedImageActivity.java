@@ -10,6 +10,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -26,6 +27,7 @@ import java.util.List;
 
 public class DetectedImageActivity extends AppCompatActivity {
     Bitmap imageBitmap;
+    Button retakePictureButton;
     ImageView imageView;
     Button viewIngredientsButton;
     ArrayList<BoundingBox> detectedBoxes;
@@ -37,11 +39,21 @@ public class DetectedImageActivity extends AppCompatActivity {
 
         imageView = findViewById(R.id.imageView);
         viewIngredientsButton = findViewById(R.id.viewIngredientButton);
+        retakePictureButton = findViewById(R.id.retakePictureButton);
 
         detectedBoxes = (ArrayList<BoundingBox>) getIntent().getSerializableExtra("boxes");
         displayDetectedBoxesOnImage();
 
         viewIngredientsButton.setOnClickListener(v -> viewCart());
+        retakePictureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetectedImageActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private Cart getInitialCart(){

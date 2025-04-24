@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -21,6 +22,7 @@ import java.util.List;
 
 public class DisplayImageActivity extends AppCompatActivity {
     Button scanButton;
+    Button retakePictureButton;
     Bitmap imageBitmap;
     ImageView imageView;
     String imageUri;
@@ -31,6 +33,7 @@ public class DisplayImageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_image);
         scanButton = findViewById(R.id.scanButton);
+        retakePictureButton = findViewById(R.id.retakePictureButton);
 
         context = this;
 
@@ -47,6 +50,12 @@ public class DisplayImageActivity extends AppCompatActivity {
         }
 
         scanButton.setOnClickListener(v -> scanImage());
+        retakePictureButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void scanImage(){
