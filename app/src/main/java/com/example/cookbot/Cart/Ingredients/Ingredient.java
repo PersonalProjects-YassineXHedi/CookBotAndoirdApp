@@ -1,4 +1,4 @@
-package com.example.cookbot.Ingredients;
+package com.example.cookbot.Cart.Ingredients;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -16,9 +16,12 @@ public class Ingredient implements Serializable {
         this.isSelected = false;
     }
 
-    public boolean Equals(Ingredient other){
-        if(!Objects.equals(name, other.name)){return false;}
-        return true;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Ingredient that = (Ingredient) obj;
+        return Objects.equals(name, that.name);
     }
 
     public String getName() { return name; }

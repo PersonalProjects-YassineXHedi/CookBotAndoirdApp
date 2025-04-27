@@ -1,4 +1,4 @@
-package com.example.cookbot.Ingredients;
+package com.example.cookbot.Cart.Ingredients;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -12,6 +12,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.cookbot.Cart.Cart;
 import com.example.cookbot.R;
 
 import java.util.ArrayList;
@@ -85,7 +86,7 @@ public class IngredientTable {
         }
     }
 
-    public void addIngredients(ArrayList<Ingredient> ingredients){
+    public void addIngredients(List<Ingredient> ingredients){
         for (Ingredient ingredient: ingredients) {
             addIngredientRow(ingredient);
         }

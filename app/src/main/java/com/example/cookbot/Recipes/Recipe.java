@@ -3,9 +3,7 @@ package com.example.cookbot.Recipes;
 import android.annotation.SuppressLint;
 import android.database.Cursor;
 
-import androidx.camera.core.processing.SurfaceProcessorNode;
-
-import com.example.cookbot.Ingredients.Ingredient;
+import com.example.cookbot.Cart.Ingredients.Ingredient;
 import com.example.cookbot.R;
 
 import org.json.JSONArray;
@@ -77,7 +75,7 @@ public class Recipe implements Serializable {
     private boolean containsIngredient(Ingredient ingredient){
         for (Ingredient ing :
                 ingredients) {
-            if(ing.Equals(ingredient)){
+            if(ing.equals(ingredient)){
                 return true;
             }
         }

@@ -4,4 +4,6 @@
     <string name="scan_ingredients">Scan Ingredients</string>
     <string name="view_ingredients">View Ingredients</string>
     <string name="search_recipes">Search Recipes</string>
+    <string name="save_cart">save_cart</string>
+    <string name="edit_cart_name">edit_cart_name</string>
 </resources>
