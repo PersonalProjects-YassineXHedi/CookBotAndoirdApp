@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.cookbot.Ingredients.Cart;
 import com.example.cookbot.R;
 import com.example.cookbot.Recipes.Recipe;
 

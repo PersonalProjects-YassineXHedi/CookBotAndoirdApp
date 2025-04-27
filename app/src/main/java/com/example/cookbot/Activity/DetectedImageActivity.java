@@ -17,9 +17,9 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cookbot.Model.BoundingBox;
-import com.example.cookbot.Ingredients.Cart;
+import com.example.cookbot.Cart.Cart;
 import com.example.cookbot.Model.Detector;
-import com.example.cookbot.Ingredients.Ingredient;
+import com.example.cookbot.Cart.Ingredients.Ingredient;
 import com.example.cookbot.R;
 
 import java.util.ArrayList;
@@ -57,7 +57,7 @@ public class DetectedImageActivity extends AppCompatActivity {
     }
 
     private Cart getInitialCart(){
-        ArrayList<Ingredient> ingredients = Detector.getDetectedIngredients(detectedBoxes);
+        List<Ingredient> ingredients = Detector.getDetectedIngredients(detectedBoxes);
         return new Cart(ingredients);
     }
     private void viewCart(){

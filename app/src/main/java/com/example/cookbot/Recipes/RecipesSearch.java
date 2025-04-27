@@ -2,16 +2,14 @@ package com.example.cookbot.Recipes;
 
 import android.content.Context;
 
-import com.example.cookbot.Ingredients.Cart;
-import com.example.cookbot.Ingredients.Ingredient;
+import com.example.cookbot.Cart.Cart;
+import com.example.cookbot.Cart.Ingredients.Ingredient;
 import com.example.cookbot.RecipeDatabase.RecipeDatabase;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class RecipesSearch {
