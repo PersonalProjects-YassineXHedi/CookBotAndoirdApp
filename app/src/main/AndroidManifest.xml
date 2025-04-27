@@ -31,6 +31,7 @@
         <activity android:name=".Activity.CartActivity" />
         <activity android:name=".Activity.RecipesProposalsActivity" />
         <activity android:name=".Activity.RecipeDetailsActivity" />
+        <activity android:name=".Activity.CameraActivity" />
     </application>
 
 </manifest>

@@ -2,48 +2,26 @@ package com.example.cookbot.Activity;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.Manifest;
-import android.os.Environment;
-import android.util.Log;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.camera.core.CameraSelector;
-import androidx.camera.core.ImageCapture;
-import androidx.camera.core.ImageCaptureException;
-import androidx.camera.core.ImageProxy;
-import androidx.camera.core.Preview;
-import androidx.camera.lifecycle.ProcessCameraProvider;
-import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 
-import com.example.cookbot.Model.InputImageHelper;
-import com.example.cookbot.databinding.ActivityMainBinding;
-import com.google.common.util.concurrent.ListenableFuture;
-
-import java.io.File;
+import com.example.cookbot.R;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class MainActivity extends AppCompatActivity {
-    private ActivityMainBinding viewBinding;
-
-    private ImageCapture imageCapture = null;
-
-    private ExecutorService cameraExecutor;
-
-    private static final String TAG = "CameraXApp";
+    Button openCameraButton;
+    Button viewCartsButton;
 
     private static final List<String> REQUIRED_PERMISSIONS = new ArrayList<String>() {{
         add(Manifest.permission.CAMERA);
@@ -54,77 +32,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewBinding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(viewBinding.getRoot());
+        setContentView(R.layout.activity_main);
+
+        openCameraButton = findViewById(R.id.openCamera);
+        openCameraButton.setEnabled(false);
+
+        viewCartsButton = findViewById(R.id.viewCarts);
 
         if (allPermissionsGranted()) {
-            startCamera();
+            openCameraButton.setEnabled(true);
         } else {
             requestPermissions();
         }
 
-        viewBinding.imageCapture.setOnClickListener(v -> takePhoto());
-
-        cameraExecutor = Executors.newSingleThreadExecutor();
+        openCameraButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+            startActivity(intent);
+        });
     }
 
-    private void takePhoto() {
-        if (imageCapture == null) return;
-
-        imageCapture.takePicture(
-                ContextCompat.getMainExecutor(this),
-                new ImageCapture.OnImageCapturedCallback() {
-                    @Override
-                    public void onCaptureSuccess(@NonNull ImageProxy imageProxy) {
-                        File tempDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-
-                        Uri imageUri = InputImageHelper.getImageUri(imageProxy, tempDir);
-
-                        Intent intent = new Intent(MainActivity.this, DisplayImageActivity.class);
-                        intent.putExtra("image_uri", imageUri.toString());
-                        startActivity(intent);
-                    }
-
-                    @Override
-                    public void onError(@NonNull ImageCaptureException exception) {
-                        exception.printStackTrace();
-                    }
-                }
-        );
-
-    }
-
-    private void startCamera() {
-        ListenableFuture<ProcessCameraProvider> cameraProviderFuture =
-                ProcessCameraProvider.getInstance(this);
-
-        cameraProviderFuture.addListener(() -> {
-            try {
-                // Used to bind the lifecycle of cameras to the lifecycle owner
-                ProcessCameraProvider cameraProvider = cameraProviderFuture.get();
-
-                viewBinding.viewFinder.setScaleType(PreviewView.ScaleType.FILL_CENTER);
-
-                Preview preview = new Preview.Builder().build();
-                imageCapture =new ImageCapture.Builder().build();
-                preview.setSurfaceProvider(viewBinding.viewFinder.getSurfaceProvider());
-
-                // Select back camera as a default
-                CameraSelector cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA;
-
-                // Unbind use cases before rebinding
-                cameraProvider.unbindAll();
-
-                // Bind use cases to camera
-                cameraProvider.bindToLifecycle(
-                        this, cameraSelector, preview, imageCapture
-                );
-
-            } catch (ExecutionException | InterruptedException e) {
-                Log.e(TAG, "Use case binding failed", e);
-            }
-        }, ContextCompat.getMainExecutor(this));
-    }
 
 
 
@@ -141,12 +67,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        cameraExecutor.shutdown();
-    }
-
     private final ActivityResultLauncher<String[]> activityResultLauncher =
             registerForActivityResult(
                     new ActivityResultContracts.RequestMultiplePermissions(),
@@ -161,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                         if (!permissionGranted) {
                             Toast.makeText(getBaseContext(), "Permission request denied", Toast.LENGTH_SHORT).show();
                         } else {
-                            startCamera();
+                            openCameraButton.setEnabled(true);
                         }
                     }
             );
