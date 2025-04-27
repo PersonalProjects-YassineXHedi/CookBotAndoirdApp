@@ -7,4 +7,6 @@
     <string name="save_cart">save_cart</string>
     <string name="edit_cart_name">edit_cart_name</string>
     <string name="retake">Retake</string>
+    <string name="view_old_carts">View Old Carts</string>
+    <string name="welcome">Welcome</string>
 </resources>
