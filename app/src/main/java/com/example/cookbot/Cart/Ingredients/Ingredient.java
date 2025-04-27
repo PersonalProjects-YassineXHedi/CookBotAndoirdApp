@@ -7,6 +7,11 @@ public class Ingredient implements Serializable {
     private String name;
     private boolean isSelected;
 
+    public Ingredient(){
+        name = null;
+        isSelected = false;
+    }
+
     public Ingredient(String name, boolean isSelected) {
         this.name = name;
         this.isSelected = isSelected;
@@ -27,4 +32,5 @@ public class Ingredient implements Serializable {
     public String getName() { return name; }
     public boolean isSelected() { return isSelected; }
     public void setSelected(boolean selected) { isSelected = selected; }
+    public void setName(String name){this.name = name;}
 }

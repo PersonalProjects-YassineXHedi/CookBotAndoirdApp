@@ -81,7 +81,6 @@ public class CartActivity extends AppCompatActivity {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
                         if (!hasFocus) {
-                            Toast.makeText(context,"yes", Toast.LENGTH_SHORT).show();
                             myCart.setCartName(cartNameEditText.getText().toString());
                             cartNameEditText.setEnabled(false);
                         }

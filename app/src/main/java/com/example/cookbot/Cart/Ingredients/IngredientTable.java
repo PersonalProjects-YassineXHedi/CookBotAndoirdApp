@@ -5,12 +5,15 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cookbot.Cart.Cart;
 import com.example.cookbot.R;
@@ -36,7 +39,7 @@ public class IngredientTable {
         TableRow headerRow = new TableRow(context);
         List<String> headers = new ArrayList<String>();
         headers.add("Ingredients");
-        headers.add("Added to Cart");
+        headers.add("Add to Cart");
         for (String header : headers) {
             TextView textView = new TextView(context);
             textView.setText(header);
@@ -103,12 +106,9 @@ public class IngredientTable {
         row.setLayoutParams(rowParams);
         rowParams.setMargins(0,100,0,0);
 
-        Button addIngredientButton = new Button(context);
-        addIngredientButton.setText("Add Ingredient");
-        addIngredientButton.setGravity(Gravity.CENTER);
-        addIngredientButton.setTextColor(Color.WHITE);
+        ImageButton addIngredientButton = new ImageButton(context);
+        addIngredientButton.setImageResource(R.drawable.add_ingredients);
         addIngredientButton.setBackgroundResource(R.drawable.rounded_button);
-        addIngredientButton.setTextSize(15);
 
         TableRow.LayoutParams buttonParams = new TableRow.LayoutParams(
                 TableRow.LayoutParams.WRAP_CONTENT,
@@ -138,6 +138,8 @@ public class IngredientTable {
         TableRow row = new TableRow(context);
         row.setLayoutParams(rowParams);
 
+        Ingredient newIngredient = new Ingredient();
+
         EditText ingredientName = new EditText(context);
         ingredientName.setHint("Enter ingredient");
         ingredientName.setGravity(Gravity.CENTER);
@@ -145,25 +147,30 @@ public class IngredientTable {
         ingredientName.setBackground(null);
         row.addView(ingredientName);
 
-        Button addButton = new Button(context);
-        addButton.setText("Add");
-        addButton.setTextColor(Color.WHITE);
-        addButton.setBackgroundColor(Color.BLACK);
-        addButton.setTextSize(13);
-        addButton.setGravity(Gravity.CENTER);
-        addButton.setLayoutParams(params);
-
-        addButton.setOnClickListener(v -> {
-            String name = ingredientName.getText().toString().trim();
-            if (!name.isEmpty()) {
-                Ingredient newIngredient = new Ingredient(name, false);
-                cart.addIngredient(newIngredient);
-                addIngredientRow(newIngredient, false);
-                tableLayout.removeView(row);
+        ingredientName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    String name = ingredientName.getText().toString().trim();
+                    if (!name.isEmpty()) {
+                        newIngredient.setName(ingredientName.getText().toString().trim());
+                        cart.addIngredient(newIngredient);
+                        addIngredientRow(newIngredient, false);
+                        tableLayout.removeView(row);
+                    }
+                }
             }
         });
 
-        row.addView(addButton);
+        CheckBox checkBox = new CheckBox(context);
+        checkBox.setChecked(newIngredient.isSelected());
+        checkBox.setGravity(Gravity.CENTER);
+        checkBox.setLayoutParams(params);
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            newIngredient.setSelected(isChecked);
+        });
+
+        row.addView(checkBox);
 
         addBeforeFinalRow(row);
     }
