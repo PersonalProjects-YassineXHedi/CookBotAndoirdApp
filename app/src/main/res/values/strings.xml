@@ -6,4 +6,5 @@
     <string name="search_recipes">Search Recipes</string>
     <string name="save_cart">save_cart</string>
     <string name="edit_cart_name">edit_cart_name</string>
+    <string name="retake">Retake</string>
 </resources>
