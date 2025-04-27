@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
 
-import com.example.cookbot.Ingredients.Ingredient;
+import com.example.cookbot.Cart.Ingredients.Ingredient;
 
 import org.tensorflow.lite.DataType;
 import org.tensorflow.lite.Interpreter;

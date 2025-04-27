@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.cookbot.Ingredients.Cart;
+import com.example.cookbot.Cart.Cart;
 import com.example.cookbot.R;
 import com.example.cookbot.Recipes.Recipe;
 import com.example.cookbot.Recipes.RecipeAdapter;
